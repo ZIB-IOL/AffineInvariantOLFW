@@ -127,9 +127,7 @@ def gap_plotter(y_data: list,
         # Plot the line with marker
         line = plt.plot(y_data[i], linestyle=styles[i], color=colors[i], label=labels[i], linewidth=linewidth, zorder=1)
 
-        # marker_indices = list(np.logspace(0, np.log10(len(y_data[i]) - 1), num=n_markers, base=10, dtype=int))
         marker_indices = create_sublist(marker_indices_all, n_sublists, i+1)
-        # marker_indices = [idx for idx in marker_indices if idx <= len(y_data[0]) - 1]
         marker_values = [y_data[i][idx] for idx in marker_indices]
         scatter = plt.scatter(marker_indices, marker_values, marker=markers[i], color=colors[i], s=marker_size ** 2,
                               label=labels[i], edgecolor="black", linewidth=1, zorder=2)

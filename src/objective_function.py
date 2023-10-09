@@ -72,9 +72,7 @@ class SquaredLoss:
             step: dict
                 A dictionnary containing the information about the step type. The dictionary can have the following arg-
                 uments:
-                    "step type": Choose from "open-loop", "open-loop constant", "line-search", "line-search afw",
-                    "short-step afw", "line-search difw probability simplex", "short-step", and
-                    "short-step difw probability simplex".
+                    "step type": Choose from "open-loop", "line-search", "short-step".
                 Additional Arguments:
                     For "open-loop", provide float values for the keys "a", "b", "c", "d" that affect the step type
                     as follows: a / (b * iteration**d + c)
@@ -95,8 +93,6 @@ class SquaredLoss:
             c = step["c"]
             d = step["d"]
             optimal_distance = a / (b * iteration ** d + c)
-        elif step_type == "open-loop constant":
-            optimal_distance = step["cst"]
 
         elif step_type == "line-search":
             p_x = direction - x
@@ -104,30 +100,6 @@ class SquaredLoss:
 
         elif step_type == "short-step":
             optimal_distance = gradient.dot(x - direction) / (self.L * np.linalg.norm(x - direction) ** 2)
-
-        elif step_type == "line-search afw":
-            optimal_distance = float(-gradient.T.dot(direction)) / (direction.T.dot(self.Asquared).dot(direction))
-
-        elif step_type == "short-step afw":
-            optimal_distance = float(-gradient.T.dot(direction)) / (self.L * np.linalg.norm(direction) ** 2)
-
-        elif step_type == "line-search difw probability simplex":
-            y_mod = direction.copy()[(direction < 0)]
-            x_mod = x.copy()[(direction < 0)]
-            y_mod[(y_mod == 0)] = 1
-            max_step = min(max_step, np.max(-x_mod / y_mod))
-            optimal_distance = float(-gradient.T.dot(direction)) / (direction.T.dot(self.Asquared).dot(direction))
-
-        elif step_type == "short-step difw probability simplex":
-            y_mod = direction.copy()[(direction < 0)]
-            x_mod = x.copy()[(direction < 0)]
-            y_mod[(y_mod == 0)] = 1
-
-            try:
-                max_step = min(max_step, np.max(-x_mod / y_mod))
-            except ValueError:  # raised if `y` is empty.
-                pass
-            optimal_distance = float(-gradient.T.dot(direction)) / (self.L * np.linalg.norm(direction) ** 2)
 
         if optimal_distance > max_step:
             optimal_distance = max_step
@@ -187,7 +159,7 @@ class LogisticLoss:
             step: dict
                 A dictionnary containing the information about the step type. The dictionary can have the following arg-
                 uments:
-                    "step type": Choose from "open-loop", "open-loop constant"
+                    "step type": Choose from "open-loop"
                 Additional Arguments:
                     For "open-loop", provide float values for the keys "a", "b", "c", "d" that affect the step type
                     as follows: a / (b * iteration**d + c)
@@ -205,8 +177,6 @@ class LogisticLoss:
             c = step["c"]
             d = step["d"]
             optimal_distance = a / (b * iteration ** d + c)
-        elif step_type == "open-loop constant":
-            optimal_distance = step["cst"]
 
         if optimal_distance > max_step:
             optimal_distance = max_step
@@ -272,7 +242,7 @@ class HuberLossCollaborativeFiltering:
             step: dict
                 A dictionnary containing the information about the step type. The dictionary can have the following arg-
                 uments:
-                    "step type": Choose from "open-loop", "open-loop constant"
+                    "step type": Choose from "open-loop"
                 Additional Arguments:
                     For "open-loop", provide float values for the keys "a", "b", "c", "d" that affect the step type
                     as follows: a / (b * iteration**d + c)
@@ -290,8 +260,6 @@ class HuberLossCollaborativeFiltering:
             c = step["c"]
             d = step["d"]
             optimal_distance = a / (b * iteration ** d + c)
-        elif step_type == "open-loop constant":
-            optimal_distance = step["cst"]
 
         if optimal_distance > max_step:
             optimal_distance = max_step

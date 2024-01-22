@@ -54,9 +54,13 @@ for lmbda in lmbdas:
         file_name = ("strong_growth" + "_r=" + str(round(r, 2)) + "_M=" + str(round(M, 2)) + "_p=" + str(round(p, 2)) +
                      "_lmbda=" + str(round(lmbda, 2)) + "_l=" + str(l))
 
-        S = int(max(np.int64(np.ceil(l * M / 2 - l)), 1))
-        S_label = "S = " + str(S)
-        lines = [(S, S_label)]
+
+        if p > 2:
+            lines = None
+        else:
+            S = int(max(np.int64(np.ceil(l * M / 2 - l)), 1))
+            S_label = "S = " + str(S)
+            lines = [(S, S_label)]
 
         gap_plotter(y_data=gaps,
                     labels=labels,

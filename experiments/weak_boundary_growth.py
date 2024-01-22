@@ -59,9 +59,7 @@ for y_norm in [1.0]:
             round(p, 2))) +
                      "_y_norm=" + str(y_norm) + "_l=" + str(l))
 
-        S = int(max(np.int64(np.ceil(l * M / 2 - l)), 1))
-        S_label = "S = " + str(S)
-        lines = [(S, S_label)]
+        lines = None
 
         gap_plotter(y_data=gaps,
                     labels=labels,

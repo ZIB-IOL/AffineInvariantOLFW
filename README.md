@@ -47,10 +47,10 @@ To perform the experiments in the paper:
 >>> python3 -m experiments.logistic_regression
 ```
 ```python3 script
->>> python3 -m experiments.polytope
+>>> python3 -m experiments.polytope_ls_ol
 ```
 ```python3 script
->>> python3 -m experiments.polytope_ls_ol
+>>> python3 -m experiments.polytope
 ```
 ```python3 script
 >>> python3 -m experiments.regression
@@ -63,3 +63,13 @@ To perform the experiments in the paper:
 ```
 
 The experiments are then stored in ~/tmp/experiments/figures.
+
+
+Some referees were interested in seeing the effects of higher dimensions on the experiments. No surprises occurred. 
+For completeness, the additional experiments can be run in the same way as the experiments for the main paper:
+```python3 script
+>>> python3 -m experiments.referee_ablation_study_l
+```
+```python3 script
+>>> python3 -m experiments.referee_polytope_ls_ol
+```
